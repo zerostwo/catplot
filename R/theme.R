@@ -28,9 +28,6 @@
 #' @param ... additional arguments passed to \code{\link[ggplot2:theme]{theme}}
 #'
 #' @return a ggplot2 theme object
-#'
-#' @importFrom ggplot2 margin
-#'
 #' @export
 #'
 #' @examples
