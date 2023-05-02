@@ -1,0 +1,19 @@
+Package: catplot
+Type: Package
+Title: Capable And Tity Plot Tools
+Version: 0.0.0.9000
+Date: 2022-12-01
+Authors@R: c(
+  person(given = "Songqi", family = "Duan", 
+  email = "songqi.duan@outlook.com", 
+  role = c("aut", "cre"), 
+  comment = c(ORCID = "0000-0002-0822-5883"))
+  )
+Maintainer: Songqi Duan <songqi.duan@outlook.com>
+Description: A capable and tity data visualization tool.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    ggplot2
+RoxygenNote: 7.2.3

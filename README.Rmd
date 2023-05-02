@@ -1,5 +1,17 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
 
 # catplot: Capable And Tity Plot <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
@@ -8,22 +20,20 @@
 
 ## 🤪 Overview
 
-`catplot` is a capable and tity data visualization tool and maintained
-by [Songqi Duan](https://songqi.online).
+`catplot` is a capable and tity data visualization tool and maintained by [Songqi Duan](https://songqi.online).
 
 ## 📦 Installation
 
-Install the latest version from
-[GitHub](https://github.com/zerostwo/catplot) as follow:
+Install the latest version from [GitHub](https://github.com/zerostwo/catplot) as follow:
 
-``` r
+```{r, eval = FALSE}
 if (!require(devtools)) install.packages("devtools")
 devtools::install_github("zerostwo/catplot")
 ```
 
 ## 🕹️ Usage
 
-``` r
+```{r iris, fig.width=8, fig.height=5, warning=FALSE}
 library(catplot)
 library(ggplot2)
 
@@ -38,5 +48,3 @@ p <- iris |>
   )
 p
 ```
-
-<img src="man/figures/README-iris-1.png" width="100%" />
