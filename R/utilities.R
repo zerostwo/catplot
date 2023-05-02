@@ -1,5 +1,6 @@
 #' @importFrom ggplot2 element_blank element_line element_rect element_text
 #'   margin unit
+#' @importFrom magrittr %>%
 NULL
 
 #' Set a default value if an object is null

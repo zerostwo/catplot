@@ -71,12 +71,11 @@ library(catplot)
 library(ggplot2)
 
 data("iris")
-iris |>
-  ggplot(aes(x = Species, y = Sepal.Length)) +
-  geom_boxplot() +
-  theme_cat(
-    aspect_ratio = 1,
-    show_panel_grid = "both",
-    show_title = "y"
-  )
+ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
+geom_boxplot() +
+theme_cat(
+  aspect_ratio = 1,
+  show_panel_grid = "both",
+  show_title = "y"
+)
 }

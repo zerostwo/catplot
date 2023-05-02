@@ -35,14 +35,13 @@
 #' library(ggplot2)
 #'
 #' data("iris")
-#' iris |>
-#'   ggplot(aes(x = Species, y = Sepal.Length)) +
-#'   geom_boxplot() +
-#'   theme_cat(
-#'     aspect_ratio = 1,
-#'     show_panel_grid = "both",
-#'     show_title = "y"
-#'   )
+#' ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
+#' geom_boxplot() +
+#' theme_cat(
+#'   aspect_ratio = 1,
+#'   show_panel_grid = "both",
+#'   show_title = "y"
+#' )
 theme_cat <- function(aspect_ratio = NULL,
                       frame = "closed",
                       show_panel_grid = NULL,
@@ -297,7 +296,7 @@ theme_cat <- function(aspect_ratio = NULL,
   } else if (show_panel_grid == "both") {
     theme <- theme +
       theme(
-        panel.grid.major = element_line(
+        panel.grid = element_line(
           colour = "lightgrey",
           linewidth = base_line_size * 0.5 / 1.07,
           lineend = "square"

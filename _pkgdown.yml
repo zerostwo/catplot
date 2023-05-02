@@ -1,4 +1,16 @@
-url: ~
+url: https://catplot.com
+
 template:
   bootstrap: 5
 
+authors:
+  Songqi Duan:
+    href: https://songqi.online
+
+development:
+  mode: auto
+
+reference:
+- title: Themes
+  contents:
+  - theme_cat
