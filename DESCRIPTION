@@ -12,8 +12,12 @@ Authors@R: c(
 Maintainer: Songqi Duan <songqi.duan@outlook.com>
 Description: A capable and tity data visualization tool.
 License: GPL (>= 3)
+URL: https://github.com/zerostwo/catplot
+BugReports: https://github.com/zerostwo/catplot/issues
 Encoding: UTF-8
 LazyData: true
 Imports: 
     ggplot2
 RoxygenNote: 7.2.3
+Suggests: 
+    covr
