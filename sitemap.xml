@@ -22,7 +22,16 @@
     <loc>https://catplot.com/news/index.html</loc>
   </url>
   <url>
+    <loc>https://catplot.com/reference/cat_boxplot.html</loc>
+  </url>
+  <url>
+    <loc>https://catplot.com/reference/cat_modify_plot.html</loc>
+  </url>
+  <url>
     <loc>https://catplot.com/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://catplot.com/reference/reexports.html</loc>
   </url>
   <url>
     <loc>https://catplot.com/reference/set-if-null.html</loc>
