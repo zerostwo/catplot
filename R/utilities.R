@@ -1,7 +1,13 @@
 #' @importFrom ggplot2 element_blank element_line element_rect element_text
-#'   margin unit
-#' @importFrom magrittr %>%
+#'   margin unit aes as_label enquo geom_boxplot ggplot guide_axis guide_legend
+#'   guides labs scale_x_continuous scale_y_continuous
+#' @importFrom ggsignif geom_signif
+#' @importFrom dplyr mutate
 NULL
+
+#' @importFrom magrittr %>%
+##' @export
+magrittr::`%>%`
 
 #' Set a default value if an object is null
 #'

@@ -14,10 +14,10 @@ theme_cat(
   text_italic = NULL,
   legend_position = "right",
   legend_direction = NULL,
-  base_size = 8,
+  font_size = 8,
   base_family = "",
-  base_line_size = base_size/16,
-  base_rect_size = base_size/16,
+  base_line_size = font_size/16,
+  base_rect_size = font_size/16,
   ...
 )
 }
@@ -48,7 +48,7 @@ theme_cat(
 \item{legend_direction}{character; indicates the direction of the legend, "h"
 or "horizontal", "v" or "vertical", or "default"}
 
-\item{base_size}{numeric; base size of text elements in the theme}
+\item{font_size}{numeric; base size of text elements in the theme}
 
 \item{base_family}{character; base font family of text elements in the theme}
 
@@ -72,10 +72,10 @@ library(ggplot2)
 
 data("iris")
 ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-geom_boxplot() +
-theme_cat(
-  aspect_ratio = 1,
-  show_panel_grid = "both",
-  show_title = "y"
-)
+  geom_boxplot() +
+  theme_cat(
+    aspect_ratio = 1,
+    show_panel_grid = "both",
+    show_title = "y"
+  )
 }

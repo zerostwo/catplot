@@ -21,7 +21,7 @@
 #'   "right", "left", "bottom", or "top"
 #' @param legend_direction character; indicates the direction of the legend, "h"
 #'   or "horizontal", "v" or "vertical", or "default"
-#' @param base_size numeric; base size of text elements in the theme
+#' @param font_size numeric; base size of text elements in the theme
 #' @param base_family character; base font family of text elements in the theme
 #' @param base_line_size numeric; base line size of elements in the theme
 #' @param base_rect_size numeric; base line size of rect in the theme
@@ -36,12 +36,12 @@
 #'
 #' data("iris")
 #' ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-#' geom_boxplot() +
-#' theme_cat(
-#'   aspect_ratio = 1,
-#'   show_panel_grid = "both",
-#'   show_title = "y"
-#' )
+#'   geom_boxplot() +
+#'   theme_cat(
+#'     aspect_ratio = 1,
+#'     show_panel_grid = "both",
+#'     show_title = "y"
+#'   )
 theme_cat <- function(aspect_ratio = NULL,
                       frame = "closed",
                       show_panel_grid = NULL,
@@ -51,43 +51,32 @@ theme_cat <- function(aspect_ratio = NULL,
                       text_italic = NULL,
                       legend_position = "right",
                       legend_direction = NULL,
-                      base_size = 8,
+                      font_size = 8,
                       base_family = "",
-                      base_line_size = base_size / 16,
-                      base_rect_size = base_size / 16,
+                      base_line_size = font_size / 16,
+                      base_rect_size = font_size / 16,
                       ...) {
   match.arg(arg = frame, choices = c("closed", "open"))
   show_panel_grid <- show_panel_grid %||% "both_not"
-  match.arg(
-    arg = show_panel_grid,
-    choices = c("x", "y", "both", "both_not")
-  )
+  match.arg(arg = show_panel_grid,
+            choices = c("x", "y", "both", "both_not"))
   show_title <- show_title %||% "both_not"
-  match.arg(
-    arg = show_title,
-    choices = c("x", "y", "both", "both_not")
-  )
+  match.arg(arg = show_title,
+            choices = c("x", "y", "both", "both_not"))
   show_ticks <- show_ticks %||% "both_not"
-  match.arg(
-    arg = show_ticks,
-    choices = c("x", "y", "both", "both_not")
-  )
+  match.arg(arg = show_ticks,
+            choices = c("x", "y", "both", "both_not"))
   show_text <- show_text %||% "both_not"
-  match.arg(
-    arg = show_text,
-    choices = c("x", "y", "both", "both_not")
-  )
+  match.arg(arg = show_text,
+            choices = c("x", "y", "both", "both_not"))
   text_italic <- text_italic %||% "both_not"
-  match.arg(
-    arg = text_italic,
-    choices = c("x", "y", "both", "both_not")
-  )
-  match.arg(
-    arg = legend_position,
-    choices = c("right", "left", "bottom", "top")
-  )
+  match.arg(arg = text_italic,
+            choices = c("x", "y", "both", "both_not"))
+  match.arg(arg = legend_position,
+            choices = c("right", "left", "bottom", "top"))
 
-  legend_margin <- switch(legend_position,
+  legend_margin <- switch(
+    legend_position,
     "right" = margin(l = -8),
     "top" = margin(b = -8),
     "bottom" = margin(t = -8),
@@ -115,25 +104,25 @@ theme_cat <- function(aspect_ratio = NULL,
     # Legend
     legend.background = element_blank(),
     legend.title = element_text(
-      size = base_size,
+      size = font_size,
       face = "plain",
       colour = "black"
     ),
     legend.text = element_text(
-      size = base_size,
+      size = font_size,
       face = "plain",
       colour = "black"
     ),
     legend.key = element_blank(),
-    legend.key.height = unit(base_size, "pt"),
-    legend.key.width = unit(base_size, "pt"),
+    legend.key.height = unit(font_size, "pt"),
+    legend.key.width = unit(font_size, "pt"),
     legend.position = legend_position,
     legend.margin = legend_margin,
     legend.direction = legend_direction,
     # Plot
     plot.background = element_blank(),
     plot.title = element_text(
-      size = base_size,
+      size = font_size,
       hjust = 0.5,
       vjust = -1,
       face = "plain",
@@ -141,14 +130,14 @@ theme_cat <- function(aspect_ratio = NULL,
     ),
     plot.subtitle = element_text(
       hjust = 0.5,
-      size = base_size,
+      size = font_size,
       face = "plain",
       colour = "black"
     ),
     # Facetting
     strip.background = element_blank(),
     strip.text = element_text(
-      size = base_size,
+      size = font_size,
       face = "plain",
       colour = "black"
     ),
@@ -178,7 +167,7 @@ theme_cat <- function(aspect_ratio = NULL,
   if (show_title == "x") {
     theme <- theme + theme(
       axis.title.x = element_text(
-        size = base_size,
+        size = font_size,
         face = "plain",
         colour = "black"
       ),
@@ -187,7 +176,7 @@ theme_cat <- function(aspect_ratio = NULL,
   } else if (show_title == "y") {
     theme <- theme + theme(
       axis.title.y = element_text(
-        size = base_size,
+        size = font_size,
         face = "plain",
         colour = "black"
       ),
@@ -195,7 +184,7 @@ theme_cat <- function(aspect_ratio = NULL,
     )
   } else if (show_title == "both") {
     theme <- theme + theme(axis.title = element_text(
-      size = base_size,
+      size = font_size,
       face = "plain",
       colour = "black"
     ))
@@ -233,15 +222,15 @@ theme_cat <- function(aspect_ratio = NULL,
   }
   # Fontface
   x_fontface <- ifelse(text_italic == "x" |
-    text_italic == "both", "italic", "plain")
+                         text_italic == "both", "italic", "plain")
   y_fontface <- ifelse(text_italic == "y" |
-    text_italic == "both", "italic", "plain")
+                         text_italic == "both", "italic", "plain")
   # Text
   if (show_text == "x") {
     theme <- theme +
       theme(
         axis.text.x = element_text(
-          size = base_size,
+          size = font_size,
           face = x_fontface,
           colour = "black"
         ),
@@ -251,7 +240,7 @@ theme_cat <- function(aspect_ratio = NULL,
     theme <- theme +
       theme(
         axis.text.y = element_text(
-          size = base_size,
+          size = font_size,
           face = y_fontface,
           colour = "black"
         ),
@@ -261,12 +250,12 @@ theme_cat <- function(aspect_ratio = NULL,
     theme <- theme +
       theme(
         axis.text.x = element_text(
-          size = base_size,
+          size = font_size,
           face = x_fontface,
           colour = "black"
         ),
         axis.text.y = element_text(
-          size = base_size,
+          size = font_size,
           face = x_fontface,
           colour = "black"
         )
@@ -306,3 +295,151 @@ theme_cat <- function(aspect_ratio = NULL,
   theme <- theme + theme(...)
   return(theme)
 }
+
+
+#' Modify a ggplot2 plot with customized options and add significance labels
+#'
+#' @inheritParams theme_cat
+#' @param plot_title Title of the plot.
+#' @param x_axis_title Title of the x-axis.
+#' @param y_axis_title Title of the y-axis.
+#' @param x_text_angle Angle of the x-axis labels.
+#' @param y_text_angle Angle of the y-axis labels.
+#' @param legend_title Title of the legend.
+#' @param legend_position Position of the legend, can be "left", "right", "top", "bottom", or NULL.
+#' @param legend_direction Direction of the legend, can be "horizontal" or "vertical".
+#' @param comparisons List of comparison groups for adding significance labels.
+#' @param test Type of statistical test to use for calculating significance. Defaults to "wilcox.test".
+#' @param step_increase Step increase for adjusting the significance label position.
+#' @param map_signif_level Logical indicating whether to map the significance level to asterisks.
+#'
+#' @return A list of ggplot2 options for modifying a plot and adding significance labels.
+#'
+#' @examples
+#' library(ggplot2)
+#'
+#' p <- ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+#'   geom_boxplot() +
+#'   cat_modify_plot(plot_title = "My Plot Title",
+#'                 x_axis_title = "X Axis Title",
+#'                 y_axis_title = "Y Axis Title",
+#'                 test = "t.test",
+#'                 comparisons = list(c("4", "6"), c("4", "8")),
+#'                 aspect_ratio = 1)
+#' p
+#'
+#' @export
+cat_modify_plot <- function(plot_title = NULL,
+                            x_axis_title = NULL,
+                            y_axis_title = NULL,
+                            x_text_angle = NULL,
+                            y_text_angle = NULL,
+                            legend_title = NULL,
+                            comparisons = NULL,
+                            test = "wilcox.test",
+                            step_increase = 0.1,
+                            map_signif_level = TRUE,
+                            aspect_ratio = NULL,
+                            frame = "closed",
+                            font_size = 8,
+                            show_panel_grid = NULL,
+                            show_title = "both",
+                            show_ticks = "both",
+                            show_text = "both",
+                            text_italic = NULL,
+                            legend_position = "right",
+                            legend_direction = NULL) {
+  list(
+    # Plot title and axis title
+    labs(title = plot_title, x = x_axis_title, y = y_axis_title),
+    # Plot legend
+    guides(
+      x = guide_axis(angle = x_text_angle),
+      y = guide_axis(angle = y_text_angle),
+      fill = guide_legend(title = legend_title)
+    ),
+    # Plot ggsignif
+    if (!is.null(comparisons)) {
+      geom_signif(
+        comparisons = comparisons,
+        size = 0.5 * 0.5 * 0.93,
+        textsize = 0.36 * 6,
+        test = test,
+        step_increase = step_increase,
+        tip_length = 0.02,
+        map_signif_level = map_signif_level
+      )
+    },
+    # Plot theme
+    theme_cat(
+      aspect_ratio = aspect_ratio,
+      frame = frame,
+      show_panel_grid = show_panel_grid,
+      show_title = show_title,
+      show_ticks = show_ticks,
+      show_text = show_text,
+      text_italic = text_italic,
+      legend_position = legend_position,
+      legend_direction = legend_direction,
+      font_size = font_size
+    )
+  )
+}
+
+# cat_modify_plot <- function(p,
+#                             plot_title = NULL,
+#                             x_axis_title = NULL,
+#                             y_axis_title = NULL,
+#                             comparisons = NULL,
+#                             test = "wilcox.test",
+#                             step_increase = 0.1,
+#                             map_signif_level = TRUE,
+#                             flip = FALSE,
+#                             ) {
+#   # Plot title and axis title
+#   p <-
+#     p + labs(title = plot_title, x = x_axis_title, y = y_axis_title)
+#   # Plot theme
+#   p <- p +
+#     theme_cat(
+#       aspect_ratio = aspect_ratio,
+#       frame = frame,
+#       show_panel_grid = show_panel_grid,
+#       show_title = show_title,
+#       show_ticks = show_ticks,
+#       show_text = show_text,
+#       text_italic = text_italic,
+#       legend_position = legend_position,
+#       legend_direction = legend_direction,
+#       font_size = font_size
+#     )
+#   # Plot legend
+#   p <- p + guides(
+#     x = guide_axis(angle = x_text_angle),
+#     y = guide_axis(angle = y_text_angle),
+#     fill = guide_legend(title = legend_title)
+#   )
+#
+#   # Plot scale
+#   if (flip) {
+#     p <- p +
+#       scale_x_continuous(expand = c(0, 0.3))
+#   } else {
+#     p <- p +
+#       scale_y_continuous(expand = c(0, 0.3))
+#   }
+#
+#   # Plot ggsignif
+#   if (!is.null(comparisons)) {
+#     p <- p + geom_signif(
+#       comparisons = comparisons,
+#       size = 0.5 * 0.5 * 0.93,
+#       textsize = 0.36 * 6,
+#       test = test,
+#       step_increase = step_increase,
+#       tip_length = 0.02,
+#       map_signif_level = map_signif_level
+#     )
+#   }
+#   return(p)
+# }

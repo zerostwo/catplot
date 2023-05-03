@@ -14,3 +14,8 @@ reference:
 - title: Themes
   contents:
   - theme_cat
+  - cat_modify_plot
+
+- title: Distribution
+  contents:
+  - cat_boxplot
