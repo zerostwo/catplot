@@ -25,10 +25,22 @@
     <loc>https://catplot.com/reference/cat_boxplot.html</loc>
   </url>
   <url>
+    <loc>https://catplot.com/reference/cat_modify_data.html</loc>
+  </url>
+  <url>
     <loc>https://catplot.com/reference/cat_modify_plot.html</loc>
   </url>
   <url>
+    <loc>https://catplot.com/reference/geom_boxplot_internal.html</loc>
+  </url>
+  <url>
     <loc>https://catplot.com/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://catplot.com/reference/is_char_or_factor.html</loc>
+  </url>
+  <url>
+    <loc>https://catplot.com/reference/is_color.html</loc>
   </url>
   <url>
     <loc>https://catplot.com/reference/reexports.html</loc>
