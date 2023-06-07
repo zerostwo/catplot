@@ -222,21 +222,30 @@ theme_cat <- function(font_size = 8,
   return(theme_modifications)
 }
 
-#' Modify a ggplot2 plot with custom theme, title, axis labels, and ggsignif comparisons
+#' Modify a ggplot2 plot with custom theme, title, axis labels, and ggsignif
+#' comparisons
 #'
-#' This function modifies a ggplot2 plot by adding a custom theme, plot title, axis labels, and ggsignif comparisons. The function returns a list of ggplot2 objects that can be used to modify the plot.
+#' This function modifies a ggplot2 plot by adding a custom theme, plot title,
+#' axis labels, and ggsignif comparisons. The function returns a list of ggplot2
+#' objects that can be used to modify the plot.
 #'
 #' @inheritParams theme_cat
 #' @param plot_title A character string representing the title of the plot
 #' @param x_axis_title A character string representing the title of the x-axis
 #' @param y_axis_title A character string representing the title of the y-axis
-#' @param x_text_angle An integer representing the angle of the x-axis text labels
-#' @param y_text_angle An integer representing the angle of the y-axis text labels
-#' @param legend_title A character string representing the title of the plot legend
+#' @param x_text_angle An integer representing the angle of the x-axis text
+#'   labels
+#' @param y_text_angle An integer representing the angle of the y-axis text
+#'   labels
+#' @param legend_title A character string representing the title of the plot
+#'   legend
 #' @param comparisons A list of comparison groups for ggsignif
-#' @param test A character string representing the statistical test to use for ggsignif
-#' @param step_increase A numeric value representing the step increase for ggsignif
-#' @param map_signif_level A logical value representing whether to map the significance level for ggsignif
+#' @param test A character string representing the statistical test to use for
+#'   ggsignif
+#' @param step_increase A numeric value representing the step increase for
+#'   ggsignif
+#' @param map_signif_level A logical value representing whether to map the
+#'   significance level for ggsignif
 #' @return A list of ggplot2 objects that can be used to modify the plot
 #' @export
 #' @examples

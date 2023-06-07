@@ -2,7 +2,8 @@
 % Please edit documentation in R/cat_modify_plot.R
 \name{cat_modify_plot}
 \alias{cat_modify_plot}
-\title{Modify a ggplot2 plot with custom theme, title, axis labels, and ggsignif comparisons}
+\title{Modify a ggplot2 plot with custom theme, title, axis labels, and ggsignif
+comparisons}
 \usage{
 cat_modify_plot(
   plot_title = waiver(),
@@ -36,11 +37,14 @@ cat_modify_plot(
 
 \item{y_axis_title}{A character string representing the title of the y-axis}
 
-\item{x_text_angle}{An integer representing the angle of the x-axis text labels}
+\item{x_text_angle}{An integer representing the angle of the x-axis text
+labels}
 
-\item{y_text_angle}{An integer representing the angle of the y-axis text labels}
+\item{y_text_angle}{An integer representing the angle of the y-axis text
+labels}
 
-\item{legend_title}{A character string representing the title of the plot legend}
+\item{legend_title}{A character string representing the title of the plot
+legend}
 
 \item{font_size}{Numeric, font size (default: 8)}
 
@@ -68,17 +72,22 @@ cat_modify_plot(
 
 \item{comparisons}{A list of comparison groups for ggsignif}
 
-\item{test}{A character string representing the statistical test to use for ggsignif}
+\item{test}{A character string representing the statistical test to use for
+ggsignif}
 
-\item{step_increase}{A numeric value representing the step increase for ggsignif}
+\item{step_increase}{A numeric value representing the step increase for
+ggsignif}
 
-\item{map_signif_level}{A logical value representing whether to map the significance level for ggsignif}
+\item{map_signif_level}{A logical value representing whether to map the
+significance level for ggsignif}
 }
 \value{
 A list of ggplot2 objects that can be used to modify the plot
 }
 \description{
-This function modifies a ggplot2 plot by adding a custom theme, plot title, axis labels, and ggsignif comparisons. The function returns a list of ggplot2 objects that can be used to modify the plot.
+This function modifies a ggplot2 plot by adding a custom theme, plot title,
+axis labels, and ggsignif comparisons. The function returns a list of ggplot2
+objects that can be used to modify the plot.
 }
 \examples{
 library(ggplot2)
@@ -93,10 +102,12 @@ p <-
     fill = factor(gear)
   )) +
   geom_boxplot() +
-  labs(title = "Miles per Gallon by Cylinder and Gear",
-       x = "Cylinder",
-       y = "Miles per Gallon",
-       fill = "Gear")
+  labs(
+    title = "Miles per Gallon by Cylinder and Gear",
+    x = "Cylinder",
+    y = "Miles per Gallon",
+    fill = "Gear"
+  )
 
 # Modify the plot with custom theme, title, and axis labels
 p + cat_modify_plot(
@@ -106,8 +117,10 @@ p + cat_modify_plot(
 )
 
 # Modify the plot with custom ggsignif comparisons
-p + cat_modify_plot(comparisons = list(c("4", "6"), c("4", "8"), c("6", "8")),
-                    test = "t.test")
+p + cat_modify_plot(
+  comparisons = list(c("4", "6"), c("4", "8"), c("6", "8")),
+  test = "t.test"
+)
 
 # Modify the plot with custom theme and ggsignif comparisons
 p + cat_modify_plot(
