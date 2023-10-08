@@ -9,8 +9,13 @@ create_ap(color = NULL, fill = NULL, shape = NULL, alpha = NULL, size = NULL)
 \arguments{
 \item{color}{A character string specifying the color to be used in the plot}
 
-\item{fill}{A character string specifying the fill color to be used in the
-plot}
+\item{fill}{A character string specifying the fill color to be used in the plot}
+
+\item{shape}{A character string specifying the shape to be used in the plot}
+
+\item{alpha}{A character string specifying the alpha value to be used in the plot}
+
+\item{size}{A character string specifying the size to be used in the plot}
 }
 \value{
 A list containing the mapping and parameters for the plot

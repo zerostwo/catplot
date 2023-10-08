@@ -67,9 +67,10 @@ magrittr::`%>%`
 #' provided to customize the mapping and parameters.
 #'
 #' @param color A character string specifying the color to be used in the plot
-#' @param fill A character string specifying the fill color to be used in the
-#'   plot
-#'
+#' @param fill A character string specifying the fill color to be used in the plot
+#' @param shape A character string specifying the shape to be used in the plot
+#' @param alpha A character string specifying the alpha value to be used in the plot
+#' @param size A character string specifying the size to be used in the plot
 #' @return A list containing the mapping and parameters for the plot
 #'
 #' @export
@@ -163,10 +164,10 @@ create_ap <- function(color = NULL,
 #' @param limitsize A logical value specifying whether to limit the size of the
 #'   plot to the device size
 #' @param bg A character string specifying the background color of the plot
-#' @param raw_data A logical value specifying whether to save the raw data used
+#' @param source_data A logical value specifying whether to save the raw data used
 #'   to create the plot as a separate CSV file
 #' @param ... Additional arguments to be passed to ggsave
-#'
+#' @importFrom utils write.csv
 #' @export
 cat_save <- function(filename,
                      plot = last_plot(),
@@ -179,21 +180,30 @@ cat_save <- function(filename,
                      dpi = 300,
                      limitsize = TRUE,
                      bg = NULL,
-                     raw_data = FALSE,
+                     source_data = FALSE,
                      ...) {
-  if (raw_data) {
-    if (is.null(path)) {
-      path <- dirname(filename)
-    }
-    basename <- basename(filename)
-    prefix <- tools::file_path_sans_ext(basename)
+  if (is.null(path)) {
+    # cat_save(filename="~/figure1a.pdf", path = NULL)
+    path <- cat_set_path(dirname(filename))
+    filename <- basename(filename)
+  } else {
+    # cat_save(filename="figure1a.pdf", path = "~/")
+    path <- cat_set_path(path)
+  }
+
+  if (source_data) {
+    prefix <- tools::file_path_sans_ext(filename)
     data <- plot$data
     data_file <- file.path(path, paste0(prefix, ".data.csv"))
-    write_csv(x = data,
-              file = data_file)
-    plot_file <- file.path(path, paste0(prefix, ".rds"))
-    saveRDS(object = plot,
-            file = plot_file)
+    write.csv(
+      x = data,
+      file = data_file
+    )
+    plot_file <- file.path(path, paste0(prefix, ".plot.rds"))
+    saveRDS(
+      object = plot,
+      file = plot_file
+    )
   }
   ggsave(
     filename = filename,
@@ -208,5 +218,67 @@ cat_save <- function(filename,
     limitsize = limitsize,
     bg = bg,
     ...
+  )
+}
+
+#' Create a directory if it does not exist and return the path
+#'
+#' This function takes a path as input and creates a directory if it does not
+#' exist. It then returns the path.
+#'
+#' @param path A character string specifying the path to be created.
+#'
+#' @return A character string specifying the path.
+#'
+#' @examples
+#' cat_set_path("~/my_folder")
+#'
+#' @export
+cat_set_path <- function(path) {
+  if (!file.exists(path)) {
+    dir.create(path, recursive = TRUE)
+  }
+  return(path)
+}
+
+create_new_project <- function(path) {
+  project_name <- basename(path)
+  # code: scripts, functions, figures
+  cat_set_path(file.path(path, "code", "scripts"))
+  cat_set_path(file.path(path, "code", "functions"))
+  cat_set_path(file.path(path, "code", "figures"))
+  # data: raw, intermediate, processed
+  cat_set_path(file.path(path, "data", "raw"))
+  cat_set_path(file.path(path, "data", "intermediate"))
+  cat_set_path(file.path(path, "data", "processed"))
+  # results: figures, tables, reports
+  cat_set_path(file.path(path, "results", "figures"))
+  cat_set_path(file.path(path, "results", "tables"))
+  cat_set_path(file.path(path, "results", "reports"))
+  # logs
+  cat_set_path(file.path(path, "logs"))
+  # Rproj
+  writeLines(
+    sprintf(
+      "Version: 1.0\nRestoreWorkspace: Default\nSaveWorkspace: Default\nAlwaysSaveHistory: Default\n\nRCodeVersion: %s\nShowHiddenFiles: Default\nLibs: %s\n",
+      R.version$version.string,
+      .libPaths()
+    ),
+    file.path(path, sprintf("%s.Rproj", project_name))
+  )
+  # README
+  writeLines(
+    sprintf(
+      "# %s\n\n## Description\n\n## Usage\n\n## Author\n\n## License\n\n## References",
+      project_name
+    ),
+    file.path(path, "README.md")
+  )
+  # Congradulations
+  message(
+    sprintf(
+      "Congradulations! You have created a new project at %s",
+      path
+    )
   )
 }

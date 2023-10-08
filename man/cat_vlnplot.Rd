@@ -42,6 +42,8 @@ A ggplot2 object.
 This function plots a violin plot with categorical groups using the VlnPlot function from the Seurat package.
 }
 \examples{
+\dontrun{
 cat_vlnplot(object = mySeuratObject, features = c("CD3D", "CD8A", "CD4"))
+}
 
 }

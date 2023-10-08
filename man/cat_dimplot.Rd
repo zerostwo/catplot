@@ -6,17 +6,34 @@
 \usage{
 cat_dimplot(
   object,
+  dims = c(1, 2),
+  cells = NULL,
+  cols = NULL,
+  pt_size = 1,
   reduction = NULL,
   group_by = NULL,
   split_by = NULL,
+  shape_by = NULL,
+  order = NULL,
+  shuffle = FALSE,
+  seed = 1,
   label = FALSE,
+  label_size = 8 * 0.36,
+  label_color = "black",
+  label_box = FALSE,
+  repel = TRUE,
+  cells_highlight = NULL,
+  cols_highlight = "#DE2D26",
+  sizes_highlight = 1,
+  na_value = "grey50",
+  ncol = NULL,
+  combine = TRUE,
   raster = TRUE,
+  raster_dpi = c(512, 512),
   show_legend = TRUE,
   show_axis = TRUE,
   show_border = TRUE,
   title = NULL,
-  pt_size = 1,
-  repel = TRUE,
   palette = "Paired",
   ...
 )
@@ -24,15 +41,53 @@ cat_dimplot(
 \arguments{
 \item{object}{A Seurat object containing categorical data.}
 
+\item{dims}{The dimensions to plot. Default is c(1, 2).}
+
+\item{cells}{The cells to plot. Default is NULL.}
+
+\item{cols}{The columns to plot. Default is NULL.}
+
+\item{pt_size}{The size of the points on the plot. Default is 1.}
+
 \item{reduction}{The dimensionality reduction method. Default is NULL.}
 
 \item{group_by}{The variable to group data by. Default is NULL.}
 
 \item{split_by}{The variable to split data by. Default is NULL.}
 
+\item{shape_by}{The variable to shape data by. Default is NULL.}
+
+\item{order}{The order to plot the data in. Default is NULL.}
+
+\item{shuffle}{Logical value indicating whether to shuffle the data before plotting. Default is FALSE.}
+
+\item{seed}{The random seed to use for shuffling the data. Default is 1.}
+
 \item{label}{Logical value indicating whether to show labels on the plot. Default is FALSE.}
 
+\item{label_size}{The size of the labels on the plot. Default is 8 * 0.36.}
+
+\item{label_color}{The color of the labels on the plot. Default is "black".}
+
+\item{label_box}{Logical value indicating whether to show a box around the labels on the plot. Default is FALSE.}
+
+\item{repel}{Logical value indicating whether to use point repulsion to avoid overlapping labels. Default is TRUE.}
+
+\item{cells_highlight}{The cells to highlight on the plot. Default is NULL.}
+
+\item{cols_highlight}{The columns to highlight on the plot. Default is NULL.}
+
+\item{sizes_highlight}{The sizes to highlight on the plot. Default is NULL.}
+
+\item{na_value}{The value to use for missing data. Default is "grey50".}
+
+\item{ncol}{The number of columns to use for the plot. Default is NULL.}
+
+\item{combine}{Logical value indicating whether to combine the plots into a single plot. Default is TRUE.}
+
 \item{raster}{Logical value indicating whether to use rasterization for improved performance. Default is TRUE.}
+
+\item{raster_dpi}{The DPI to use for rasterization. Default is c(512, 512).}
 
 \item{show_legend}{Logical value indicating whether to show the legend on the plot. Default is TRUE.}
 
@@ -41,10 +96,6 @@ cat_dimplot(
 \item{show_border}{Logical value indicating whether to show the panel and axis borders on the plot. Default is TRUE.}
 
 \item{title}{The title for the plot. Default is NULL.}
-
-\item{pt_size}{The size of the points on the plot. Default is 1.}
-
-\item{repel}{Logical value indicating whether to use point repulsion to avoid overlapping labels. Default is TRUE.}
 
 \item{palette}{The color palette to use for the plot. Default is "Paired".}
 
@@ -57,11 +108,13 @@ A ggplot2 object containing the dimensionality reduction plot.
 This function creates a dimensionality reduction plot for categorical data using Seurat and ggplot2. It allows for the selection of the reduction method, grouping, and splitting variables, as well as the visualization of labels, rasterization, and color palette. The cat_dimplot() function is intended to be used as a wrapper around Seurat's DimPlot() function.
 }
 \examples{
+\dontrun{
 library(Seurat)
 library(ggplot2)
 data("pbmc_small")
 pbmc_small <- CreateSeuratObject(counts = pbmc_small)
 Idents(pbmc_small) <- pbmc_small$percent.mt > 10
 cat_dimplot(object = pbmc_small, reduction = "tsne", group_by = "ident", palette = "Set1")
+}
 
 }

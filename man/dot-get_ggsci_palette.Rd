@@ -27,7 +27,9 @@ This function returns a color palette from the ggsci package by name, with
 the option to specify the number of colors in the palette.
 }
 \examples{
+\dontrun{
 palette <- catplot:::.get_ggsci_palette("npg", 6)
 
 barplot(1:6, col = palette)
+}
 }

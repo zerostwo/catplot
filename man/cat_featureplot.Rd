@@ -72,6 +72,8 @@ A ggplot2 object.
 This function plots feature expression in reduced dimensions using the FeaturePlot function from the Seurat package.
 }
 \examples{
+\dontrun{
 cat_featureplot(x = mySeuratObject, features = c("CD3D", "CD8A", "CD4"), reduction = "UMAP")
+}
 
 }

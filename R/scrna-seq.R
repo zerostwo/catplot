@@ -3,81 +3,139 @@
 #' This function creates a dimensionality reduction plot for categorical data using Seurat and ggplot2. It allows for the selection of the reduction method, grouping, and splitting variables, as well as the visualization of labels, rasterization, and color palette. The cat_dimplot() function is intended to be used as a wrapper around Seurat's DimPlot() function.
 #'
 #' @param object A Seurat object containing categorical data.
+#' @param dims The dimensions to plot. Default is c(1, 2).
+#' @param cells The cells to plot. Default is NULL.
+#' @param cols The columns to plot. Default is NULL.
+#' @param pt_size The size of the points on the plot. Default is 1.
 #' @param reduction The dimensionality reduction method. Default is NULL.
 #' @param group_by The variable to group data by. Default is NULL.
 #' @param split_by The variable to split data by. Default is NULL.
+#' @param shape_by The variable to shape data by. Default is NULL.
+#' @param order The order to plot the data in. Default is NULL.
+#' @param shuffle Logical value indicating whether to shuffle the data before plotting. Default is FALSE.
+#' @param seed The random seed to use for shuffling the data. Default is 1.
 #' @param label Logical value indicating whether to show labels on the plot. Default is FALSE.
+#' @param label_size The size of the labels on the plot. Default is 8 * 0.36.
+#' @param label_color The color of the labels on the plot. Default is "black".
+#' @param label_box Logical value indicating whether to show a box around the labels on the plot. Default is FALSE.
+#' @param repel Logical value indicating whether to use point repulsion to avoid overlapping labels. Default is TRUE.
+#' @param cells_highlight The cells to highlight on the plot. Default is NULL.
+#' @param cols_highlight The columns to highlight on the plot. Default is NULL.
+#' @param sizes_highlight The sizes to highlight on the plot. Default is NULL.
+#' @param na_value The value to use for missing data. Default is "grey50".
+#' @param ncol The number of columns to use for the plot. Default is NULL.
+#' @param combine Logical value indicating whether to combine the plots into a single plot. Default is TRUE.
 #' @param raster Logical value indicating whether to use rasterization for improved performance. Default is TRUE.
+#' @param raster_dpi The DPI to use for rasterization. Default is c(512, 512).
 #' @param show_legend Logical value indicating whether to show the legend on the plot. Default is TRUE.
 #' @param show_axis Logical value indicating whether to show the axis on the plot. Default is TRUE.
 #' @param show_border Logical value indicating whether to show the panel and axis borders on the plot. Default is TRUE.
 #' @param title The title for the plot. Default is NULL.
-#' @param pt_size The size of the points on the plot. Default is 1.
-#' @param repel Logical value indicating whether to use point repulsion to avoid overlapping labels. Default is TRUE.
 #' @param palette The color palette to use for the plot. Default is "Paired".
 #' @param ... Additional parameters to be passed to the DimPlot() function in Seurat.
 #' @return A ggplot2 object containing the dimensionality reduction plot.
 #'
 #' @examples
+#' \dontrun{
 #' library(Seurat)
 #' library(ggplot2)
 #' data("pbmc_small")
 #' pbmc_small <- CreateSeuratObject(counts = pbmc_small)
 #' Idents(pbmc_small) <- pbmc_small$percent.mt > 10
 #' cat_dimplot(object = pbmc_small, reduction = "tsne", group_by = "ident", palette = "Set1")
+#' }
 #'
 #' @importFrom ggplot2 theme element_blank element_text margin scale_color_manual labs
 #' @importFrom grDevices colorRampPalette
-#'
+#' @importFrom RColorBrewer brewer.pal
 #' @export
-cat_dimplot <- function(object,
-                        reduction = NULL,
-                        group_by = NULL,
-                        split_by = NULL,
-                        label = FALSE,
-                        raster = TRUE,
-                        show_legend = TRUE,
-                        show_axis = TRUE,
-                        show_border = TRUE,
-                        title = NULL,
-                        pt_size = 1,
-                        repel = TRUE,
-                        palette = "Paired",
-                        ...) {
+cat_dimplot <- function(
+    object,
+    dims = c(1, 2),
+    cells = NULL,
+    cols = NULL,
+    pt_size = 1,
+    reduction = NULL,
+    group_by = NULL,
+    split_by = NULL,
+    shape_by = NULL,
+    order = NULL,
+    shuffle = FALSE,
+    seed = 1,
+    label = FALSE,
+    label_size = 8 * 0.36,
+    label_color = "black",
+    label_box = FALSE,
+    repel = TRUE,
+    cells_highlight = NULL,
+    cols_highlight = "#DE2D26",
+    sizes_highlight = 1,
+    na_value = "grey50",
+    ncol = NULL,
+    combine = TRUE,
+    raster = TRUE,
+    raster_dpi = c(512, 512),
+    show_legend = TRUE,
+    show_axis = TRUE,
+    show_border = TRUE,
+    title = NULL,
+    palette = "Paired",
+    ...) {
   p <- Seurat::DimPlot(
     object = object,
+    dims = dims,
+    cells = cells,
+    cols = cols,
+    pt.size = pt_size,
     reduction = reduction,
-    label = label,
-    repel = repel,
     group.by = group_by,
     split.by = split_by,
-    label.size = 8 * 0.36,
-    pt.size = pt_size,
+    shape.by = shape_by,
+    order = NULL,
+    shuffle = FALSE,
+    seed = 1,
+    label = FALSE,
+    label.size = label_size,
+    label.color = label_color,
+    label.box = label_box,
+    repel = repel,
+    cells.highlight = cells_highlight,
+    cols.highlight = cols_highlight,
+    sizes.highlight = sizes_highlight,
+    na.value = na_value,
+    ncol = ncol,
+    combine = combine,
     raster = raster,
-    seed = 717,
+    raster.dpi = raster_dpi,
     ...
   )
   if (!show_legend) {
     p <- p + Seurat::NoLegend()
   }
-  reduction <- reduction %||% DefaultDimReduc(object = object)
+  reduction <- reduction %||% SeuratObject::DefaultDimReduc(object = object)
   object[["ident"]] <- Seurat::Idents(object = object)
   group_by <- group_by %||% "ident"
   n <- length(table(object[[group_by]]))
+  x <- ifelse(reduction == "tsne", "tSNE 1",
+    paste0(stringr::str_to_upper(reduction), " 1")
+  )
+  y <- ifelse(reduction == "tsne", "tSNE 2",
+    paste0(stringr::str_to_upper(reduction), " 2")
+  )
   p <- p +
     theme_cat(aspect_ratio = 1) +
     theme(legend.margin = margin(l = -8)) +
     labs(
-      x = paste0(stringr::str_to_upper(reduction), " 1"),
-      y = paste0(stringr::str_to_upper(reduction), " 2"),
+      x = x,
+      y = y,
       title = title
     )
 
   if (!is.null(palette)) {
     if (n > 12) {
-      values <- colorRampPalette(RColorBrewer::brewer.pal(12, palette))(n)
+      values <- colorRampPalette(brewer.pal(12, palette))(n)
     } else {
-      values <- RColorBrewer::brewer.pal(12, palette)
+      values <- brewer.pal(12, palette)
     }
     p <- p + scale_color_manual(values = values)
   }
@@ -114,9 +172,12 @@ cat_dimplot <- function(object,
 #'
 #' @importFrom ggplot2 expansion guide_axis scale_fill_manual
 #' @importFrom grDevices colorRampPalette
+#' @importFrom RColorBrewer brewer.pal
 #'
 #' @examples
+#' \dontrun{
 #' cat_vlnplot(object = mySeuratObject, features = c("CD3D", "CD8A", "CD4"))
+#' }
 #'
 #' @export
 cat_vlnplot <- function(object,
@@ -143,9 +204,9 @@ cat_vlnplot <- function(object,
   group_by <- group_by %||% "ident"
   n <- length(table(object[[group_by]]))
   if (n > 12) {
-    values <- colorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))(n)
+    values <- colorRampPalette(brewer.pal(12, "Paired"))(n)
   } else {
-    values <- RColorBrewer::brewer.pal(12, "Paired")
+    values <- brewer.pal(12, "Paired")
   }
   p <- p + theme_cat(aspect_ratio = aspect_ratio) +
     theme(
@@ -163,34 +224,63 @@ cat_vlnplot <- function(object,
 #' This function plots a dot plot with categorical groups using the DotPlot function from the Seurat package.
 #'
 #' @param x A Seurat object containing the data to plot.
+#' @param assay The assay to plot. Defaults to the default assay.
 #' @param features A character vector of feature names to plot.
-#' @param dot_scale The size of the dots to plot.
 #' @param col_min The minimum value for the color scale. Defaults to -2.5.
 #' @param col_max The maximum value for the color scale. Defaults to 2.5.
+#' @param dot_min The minimum value for the dot size scale. Defaults to 0.
+#' @param dot_scale The size of the dots to plot.
+#' @param idents A character vector of identities to plot. Defaults to all identities.
+#' @param group_by A character vector specifying the grouping variable. Defaults to "ident".
+#' @param split_by A character vector specifying the splitting variable.
+#' @param cluster_idents Whether to cluster the identities or not. Defaults to FALSE.
+#' @param scale Whether to scale the dot size or not. Defaults to TRUE.
+#' @param scale_by The variable to scale the dot size by. Defaults to "radius".
+#' @param scale_min The minimum value for the dot size scale. Defaults to NA.
+#' @param scale_max The maximum value for the dot size scale. Defaults to NA.
 #'
 #' @return A ggplot2 object.
 #'
 #' @importFrom ggplot2 coord_fixed guides theme element_text margin scale_color_distiller scale_y_discrete guide_axis guide_legend guide_colorbar
 #'
 #' @examples
+#' \dontrun{
 #' cat_dotplot(x = mySeuratObject, features = c("CD3D", "CD8A", "CD4"))
+#' }
 #'
 #' @export
 cat_dotplot <- function(x,
+                        assay = NULL,
                         features,
-                        dot_scale = 4,
                         col_min = -2.5,
                         col_max = 2.5,
-                        assay = NULL) {
+                        dot_min = 0,
+                        dot_scale = 4,
+                        idents = NULL,
+                        group_by = NULL,
+                        split_by = NULL,
+                        cluster_idents = FALSE,
+                        scale = TRUE,
+                        scale_by = "radius",
+                        scale_min = NA,
+                        scale_max = NA) {
   p <-
     Seurat::DotPlot(
-      x,
-      dot.scale = dot_scale,
+      object = x,
+      assay = assay,
       features = features,
       col.min = col_min,
       col.max = col_max,
-      assay = assay,
-      scale = TRUE
+      dot.min = dot_min,
+      dot.scale = dot_scale,
+      idents = idents,
+      group.by = group_by,
+      split.by = split_by,
+      cluster.idents = cluster_idents,
+      scale = TRUE,
+      scale.by = scale_by,
+      scale.min = scale_min,
+      scale.max = scale_max
     ) + coord_fixed() +
     guides(
       x = guide_axis(angle = 90),
@@ -248,7 +338,9 @@ cat_dotplot <- function(x,
 #' @importFrom ggplot2 theme element_blank element_text margin
 #'
 #' @examples
+#' \dontrun{
 #' cat_featureplot(x = mySeuratObject, features = c("CD3D", "CD8A", "CD4"), reduction = "UMAP")
+#' }
 #'
 #' @export
 cat_featureplot <-
@@ -287,7 +379,7 @@ cat_featureplot <-
     if (!show_legend) {
       p <- p + Seurat::NoLegend()
     }
-    reduction <- reduction %||% DefaultDimReduc(object = object)
+    reduction <- reduction %||% SeuratObject::DefaultDimReduc(object = object)
     object[["ident"]] <- Seurat::Idents(object = object)
     title <- title %||% features
     p <- p +

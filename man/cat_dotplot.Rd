@@ -6,23 +6,52 @@
 \usage{
 cat_dotplot(
   x,
+  assay = NULL,
   features,
-  dot_scale = 4,
   col_min = -2.5,
   col_max = 2.5,
-  assay = NULL
+  dot_min = 0,
+  dot_scale = 4,
+  idents = NULL,
+  group_by = NULL,
+  split_by = NULL,
+  cluster_idents = FALSE,
+  scale = TRUE,
+  scale_by = "radius",
+  scale_min = NA,
+  scale_max = NA
 )
 }
 \arguments{
 \item{x}{A Seurat object containing the data to plot.}
 
-\item{features}{A character vector of feature names to plot.}
+\item{assay}{The assay to plot. Defaults to the default assay.}
 
-\item{dot_scale}{The size of the dots to plot.}
+\item{features}{A character vector of feature names to plot.}
 
 \item{col_min}{The minimum value for the color scale. Defaults to -2.5.}
 
 \item{col_max}{The maximum value for the color scale. Defaults to 2.5.}
+
+\item{dot_min}{The minimum value for the dot size scale. Defaults to 0.}
+
+\item{dot_scale}{The size of the dots to plot.}
+
+\item{idents}{A character vector of identities to plot. Defaults to all identities.}
+
+\item{group_by}{A character vector specifying the grouping variable. Defaults to "ident".}
+
+\item{split_by}{A character vector specifying the splitting variable.}
+
+\item{cluster_idents}{Whether to cluster the identities or not. Defaults to FALSE.}
+
+\item{scale}{Whether to scale the dot size or not. Defaults to TRUE.}
+
+\item{scale_by}{The variable to scale the dot size by. Defaults to "radius".}
+
+\item{scale_min}{The minimum value for the dot size scale. Defaults to NA.}
+
+\item{scale_max}{The maximum value for the dot size scale. Defaults to NA.}
 }
 \value{
 A ggplot2 object.
@@ -31,6 +60,8 @@ A ggplot2 object.
 This function plots a dot plot with categorical groups using the DotPlot function from the Seurat package.
 }
 \examples{
+\dontrun{
 cat_dotplot(x = mySeuratObject, features = c("CD3D", "CD8A", "CD4"))
+}
 
 }

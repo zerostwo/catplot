@@ -36,7 +36,7 @@ theme_cat <- function(font_size = 8,
   linewidth <- linewidth * 0.5 / 1.07
 
   arg_list <- list(
-    frame = c("closed", "open"),
+    frame = c("closed", "open", "none"),
     show_panel_grid = c("x", "y", "both", "both_not"),
     show_title = c("x", "y", "both", "both_not"),
     show_ticks = c("x", "y", "both", "both_not"),
@@ -212,11 +212,11 @@ theme_cat <- function(font_size = 8,
   )
   theme_modifications <- list(
     theme_base,
-    frame_theme,
     title_theme,
     ticks_theme,
     text_theme,
-    grid_theme
+    grid_theme,
+    frame_theme
   )
   theme_modifications <- Reduce("+", theme_modifications)
   return(theme_modifications)

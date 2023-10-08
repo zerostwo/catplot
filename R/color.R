@@ -143,9 +143,11 @@ okabeito <- c(
 #'   specified.
 #' @return A vector of colors from the selected ggsci palette
 #' @examples
+#' \dontrun{
 #' palette <- catplot:::.get_ggsci_palette("npg", 6)
 #'
 #' barplot(1:6, col = palette)
+#' }
 .get_ggsci_palette <- function(
     palette = c(
       "npg",

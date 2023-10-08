@@ -16,7 +16,7 @@ cat_save(
   dpi = 300,
   limitsize = TRUE,
   bg = NULL,
-  raw_data = FALSE,
+  source_data = FALSE,
   ...
 )
 }
@@ -46,7 +46,7 @@ plot to the device size}
 
 \item{bg}{A character string specifying the background color of the plot}
 
-\item{raw_data}{A logical value specifying whether to save the raw data used
+\item{source_data}{A logical value specifying whether to save the raw data used
 to create the plot as a separate CSV file}
 
 \item{...}{Additional arguments to be passed to ggsave}

@@ -23,7 +23,12 @@ Imports:
     ggsignif,
     magrittr,
     monochromeR,
+    RColorBrewer,
     rlang
 Suggests: 
+    ggsci,
+    Seurat,
+    SeuratObject,
+    stringr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
