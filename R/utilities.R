@@ -241,6 +241,16 @@ cat_set_path <- function(path) {
   return(path)
 }
 
+
+#' Create a new project directory structure
+#'
+#' @param path A character string specifying the path to the project directory
+#'
+#' @return A character string specifying the path to the project directory
+#' @export
+#'
+#' @examples
+#' cat_create_new_project("~/my_project")
 create_new_project <- function(path) {
   project_name <- basename(path)
   # code: scripts, functions, figures

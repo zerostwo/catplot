@@ -31,7 +31,6 @@ Install the latest version from [GitHub](https://github.com/zerostwo/catplot) as
 if (!require(devtools)) install.packages("devtools")
 devtools::install_github("zerostwo/catplot")
 ```
-
 ## 🕹️ Usage
 
 ```{r iris, fig.width=8, fig.height=5, warning=FALSE}

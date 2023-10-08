@@ -10,25 +10,3 @@ authors:
 development:
   mode: auto
 
-reference:
-- title: Themes
-  contents:
-  - theme_cat
-
-- title:
-  contents:
-  - cat_modify_data
-  - cat_modify_plot
-
-- title: Distribution
-  contents:
-  - cat_boxplot
-
-- title: Internal
-  contents:
-  - geom_boxplot_internal
-
-- title: Utilities
-  contents:
-  - is_char_or_factor
-  - is_color
