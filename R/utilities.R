@@ -33,7 +33,6 @@ magrittr::`%>%`
   class(x) %in% c("character", "factor")
 }
 
-
 #' Check if a string is a valid color value
 #'
 #' This function takes a string and attempts to parse it as a color value using
@@ -250,13 +249,14 @@ cat_set_path <- function(path) {
 #' @export
 #'
 #' @examples
-#' cat_create_new_project("~/my_project")
+#' create_new_project("~/my_project")
 create_new_project <- function(path) {
   project_name <- basename(path)
   # code: scripts, functions, figures
   cat_set_path(file.path(path, "code", "scripts"))
   cat_set_path(file.path(path, "code", "functions"))
   cat_set_path(file.path(path, "code", "figures"))
+  cat_set_path(file.path(path, "code", "workflows"))
   # data: raw, intermediate, processed
   cat_set_path(file.path(path, "data", "raw"))
   cat_set_path(file.path(path, "data", "intermediate"))
@@ -276,6 +276,20 @@ create_new_project <- function(path) {
     ),
     file.path(path, sprintf("%s.Rproj", project_name))
   )
+  # .gitignore
+  writeLines(
+    c(
+      "data/intermediate/",
+      "data/processed/",
+      "results/figures/",
+      "results/tables/",
+      "results/reports/",
+      "logs/",
+      ".Rproj.user/",
+      ".Rhistory"
+    ),
+    file.path(path, ".gitignore")
+  )
   # README
   writeLines(
     sprintf(
@@ -284,6 +298,8 @@ create_new_project <- function(path) {
     ),
     file.path(path, "README.md")
   )
+
+  system(paste0("git init ", path))
   # Congradulations
   message(
     sprintf(

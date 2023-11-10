@@ -1,0 +1,59 @@
+---
+title: "seurat_tutorial.Rmd"
+author: "Songqi Duan"
+date: "2023-11-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(Seurat)
+
+data_dir <- "/datapool/datasets/single-cell-gene-expression/pbmc3k/filtered_gene_bc_matrices/hg19/"
+counts <- Read10X(data.dir = data_dir)
+
+pbmc <- CreateSeuratObject(
+  counts = counts, project = "pbmc3k",
+  min.cells = 3, min.features = 200
+)
+pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^MT-")
+pbmc <- subset(pbmc,
+  subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5
+)
+pbmc <- NormalizeData(pbmc,
+  normalization.method = "LogNormalize",
+  scale.factor = 10000
+)
+pbmc <- ScaleData(pbmc)
+pbmc <- FindVariableFeatures(pbmc,
+  selection.method = "vst",
+  nfeatures = 2000
+)
+pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
+pbmc <- RunUMAP(pbmc, dims = 1:10)
+
+pbmc <- FindNeighbors(pbmc, dims = 1:10)
+pbmc <- FindClusters(pbmc, resolution = 0.5)
+
+## Assigning cell type identity to clusters
+cluster.ids <- c(
+  "Naive CD4 T", "CD14+ Mono", "Memory CD4 T",
+  "B", "CD8 T", "FCGR3A+ Mono", "NK", "DC", "Platelet"
+)
+names(cluster.ids) <- levels(pbmc)
+pbmc <- RenameIdents(pbmc, cluster.ids)
+```
+
+```{r}
+DimPlot(pbmc, label = TRUE)
+```
+
+```{r}
+library(catplot)
+
+cat_dimplot(pbmc, label = TRUE)
+```
+

@@ -16,5 +16,5 @@ A character string specifying the path to the project directory
 Create a new project directory structure
 }
 \examples{
-cat_create_new_project("~/my_project")
+create_new_project("~/my_project")
 }
